@@ -1,4 +1,5 @@
 # main.py
+import os
 
 import pygame
 import sys
@@ -8,12 +9,26 @@ from game import Game
 from scores_screen import ScoresScreen
 from language_selector import LanguageSelector
 
+def resource_path(relative_path):
+    """ Получает абсолютный путь к ресурсам, независимо от того, запущен ли файл напрямую или как исполняемый файл. """
+    try:
+        # PyInstaller создает временную папку и сохраняет пути к файлам в `sys._MEIPASS`
+        base_path = sys._MEIPASS
+    except AttributeError:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+
 def load_config():
-    with open('config.json', 'r') as f:
+    config_path = resource_path("config.json")
+    # Загрузка конфигурации из файла
+    with open(config_path, 'r') as f:
         return json.load(f)
 
 def load_localization():
-    with open('localization.json', 'r', encoding='utf-8') as f:
+    localization_path = resource_path("localization.json")
+    # Загрузка конфигурации из файла
+    with open(localization_path, 'r') as f:
         return json.load(f)
 
 def main():
