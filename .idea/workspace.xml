@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="be9a69ab-aa5c-4167-b6a2-231d0bd2d355" name="Changes" comment="Game written, using only chatGPT-o1 preview. You can see all conversation on Russian on ReadME file">
-      <change beforePath="$PROJECT_DIR$/localization.json" beforeDir="false" afterPath="$PROJECT_DIR$/localization.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/menu.py" afterDir="false" />
-    </list>
+    <list default="true" id="be9a69ab-aa5c-4167-b6a2-231d0bd2d355" name="Changes" comment="Stable version" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -179,7 +176,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727183040128</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Stable version">
+      <option name="closed" value="true" />
+      <created>1727183190413</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1727183190413</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -209,6 +214,7 @@
     <MESSAGE value="Init.&#10;Game written, using only chatGPT-o1 preview. You can see all conversation on Russian on ReadME file" />
     <MESSAGE value="Game written, using only chatGPT-o1 preview. You can see all conversation on Russian on ReadME file" />
     <MESSAGE value="Added decoration effects" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added decoration effects" />
+    <MESSAGE value="Stable version" />
+    <option name="LAST_COMMIT_MESSAGE" value="Stable version" />
   </component>
 </project>
