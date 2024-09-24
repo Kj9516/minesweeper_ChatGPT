@@ -140,7 +140,14 @@ class Game:
             self.victory = True
             self.game_over = True
             self.timer.stop()
-            self.scoreboard.save_score(self.timer.elapsed_time)
+            # Сохраняем только победные результаты
+            self.scoreboard.save_score(
+                self.level_name,
+                self.width,
+                self.height,
+                self.mines_count,
+                self.timer.elapsed_time
+            )
             self.setup_game_over_buttons()
 
     def update(self):

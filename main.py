@@ -3,6 +3,7 @@ import sys
 import json
 from menu import Menu
 from game import Game
+from scores_screen import ScoresScreen
 
 def load_config():
     with open('config.json', 'r') as f:
@@ -16,6 +17,7 @@ def main():
     clock = pygame.time.Clock()
     menu = Menu(screen, config)
     game = None
+    scores_screen = None
 
     while True:
         if menu.active:
@@ -30,8 +32,19 @@ def main():
                 screen_width = field_width + side_panel_width
                 screen_height = field_height
                 screen = pygame.display.set_mode((screen_width, screen_height))
-                game = Game(screen, level_config)
+                game = Game(screen, level_config, menu.selected_level)
                 menu.active = False
+            elif menu.show_scores:
+                scores_screen = ScoresScreen(screen)
+                menu.active = False
+        elif scores_screen and scores_screen.active:
+            scores_screen.run()
+        elif scores_screen and not scores_screen.active:
+            # Возвращаемся в меню
+            menu.active = True
+            menu.show_scores = False
+            scores_screen = None
+            screen = pygame.display.set_mode((800, 600))  # Размер для меню
         elif game:
             game.run()
             if game.back_to_menu:
