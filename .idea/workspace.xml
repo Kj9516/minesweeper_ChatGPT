@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="be9a69ab-aa5c-4167-b6a2-231d0bd2d355" name="Changes" comment="Made exe file">
-      <change beforePath="$PROJECT_DIR$/dist/main.exe" beforeDir="false" afterPath="$PROJECT_DIR$/dist/main.exe" afterDir="false" />
+    <list default="true" id="be9a69ab-aa5c-4167-b6a2-231d0bd2d355" name="Changes" comment="Stable exe file version">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -210,7 +210,23 @@
       <option name="project" value="LOCAL" />
       <updated>1727185674800</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Made exe file">
+      <option name="closed" value="true" />
+      <created>1727185923286</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1727185923286</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Stable exe file version">
+      <option name="closed" value="true" />
+      <created>1727186106271</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1727186106271</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -242,6 +258,7 @@
     <MESSAGE value="Added decoration effects" />
     <MESSAGE value="Stable version" />
     <MESSAGE value="Made exe file" />
-    <option name="LAST_COMMIT_MESSAGE" value="Made exe file" />
+    <MESSAGE value="Stable exe file version" />
+    <option name="LAST_COMMIT_MESSAGE" value="Stable exe file version" />
   </component>
 </project>

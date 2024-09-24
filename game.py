@@ -69,19 +69,23 @@ class Game:
                             self.timer.start()
                             self.place_mines(cell_x, cell_y)
                             self.calculate_adjacent_mines()
-                        if not cell.flagged:
-                            self.open_cell(cell_x, cell_y)
+                            # Открываем первую ячейку после установки мин
+                            if not cell.flagged:
+                                self.open_cell(cell_x, cell_y)
+                        else:
+                            if not cell.flagged:
+                                self.open_cell(cell_x, cell_y)
                     elif event.button == 3:
                         if not cell.opened:
                             cell.flagged = not cell.flagged
             elif self.game_over and event.type == pygame.MOUSEBUTTONDOWN:
-                if hasattr(self, 'play_again_rect') and self.play_again_rect.collidepoint(event.pos):
+                if self.play_again_rect and self.play_again_rect.collidepoint(event.pos):
                     self.__init__(self.screen, {
                         'width': self.width,
                         'height': self.height,
                         'mines': self.mines_count
-                    })
-                elif hasattr(self, 'menu_rect') and self.menu_rect.collidepoint(event.pos):
+                    }, self.level_name, self.localization, self.language)
+                elif self.menu_rect and self.menu_rect.collidepoint(event.pos):
                     self.back_to_menu = True
 
     def place_mines(self, exclude_x, exclude_y):
