@@ -12,7 +12,7 @@ def load_config():
 def main():
     pygame.init()
     config = load_config()
-    screen = pygame.display.set_mode((800, 600))  # Изначальный размер для меню
+    screen = pygame.display.set_mode((800, 600), pygame.RESIZABLE)
     pygame.display.set_caption('Сапёр')
     clock = pygame.time.Clock()
     menu = Menu(screen, config)

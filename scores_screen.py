@@ -3,6 +3,8 @@
 import pygame
 import sys
 from scoreboard import Scoreboard
+from utils import adjust_font_size
+
 
 class ScoresScreen:
     def __init__(self, screen):
@@ -43,10 +45,23 @@ class ScoresScreen:
             text_surface = self.font.render(score_text, True, (0, 0, 0))
             self.screen.blit(text_surface, (50, 60 + idx * 30))
 
-        pygame.draw.rect(self.screen, (100, 100, 100), self.back_button)
-        back_text = self.button_font.render('Назад', True, (255, 255, 255))
-        # Центрируем текст внутри кнопки
-        back_text_rect = back_text.get_rect(center=self.back_button.center)
-        self.screen.blit(back_text, back_text_rect)
+        mouse_pos = pygame.mouse.get_pos()
+        if self.back_button.collidepoint(mouse_pos):
+            color = (150, 150, 150)
+        else:
+            color = (100, 100, 100)
+        pygame.draw.rect(self.screen, color, self.back_button)
+
+        back_text = 'Назад'
+        font, back_surface = adjust_font_size(
+            back_text,
+            None,
+            28,
+            self.back_button.width - 10,
+            self.back_button.height - 10
+        )
+        back_text_rect = back_surface.get_rect(center=self.back_button.center)
+        self.screen.blit(back_surface, back_text_rect)
 
         pygame.display.flip()
+

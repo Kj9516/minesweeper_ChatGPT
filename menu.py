@@ -3,6 +3,8 @@
 import pygame
 import sys
 from scoreboard import Scoreboard
+from utils import adjust_font_size
+
 
 class Menu:
     def __init__(self, screen, config):
@@ -44,6 +46,10 @@ class Menu:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    pygame.quit()
+                    sys.exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 for rect, action in self.buttons:
                     if rect.collidepoint(event.pos):
@@ -54,14 +60,32 @@ class Menu:
 
     def draw(self):
         self.screen.fill((200, 200, 200))
+        mouse_pos = pygame.mouse.get_pos()
         for rect, action in self.buttons:
-            pygame.draw.rect(self.screen, (100, 100, 100), rect)
+            # Проверяем, находится ли курсор мыши над кнопкой
+            if rect.collidepoint(mouse_pos):
+                color = (150, 150, 150)  # Более светлый цвет при наведении
+            else:
+                color = (100, 100, 100)
+            pygame.draw.rect(self.screen, color, rect)
+
             if action in self.levels:
-                text = self.button_font.render(action.capitalize(), True, (255, 255, 255))
+                text = action.capitalize()
             elif action == 'scores':
-                text = self.button_font.render('Таблица результатов', True, (255, 255, 255))
+                text = 'Таблица результатов'
+
+            # Используем функцию для подбора размера шрифта
+            font, text_surface = adjust_font_size(
+                text,
+                None,
+                36,
+                rect.width - 10,  # Учитываем отступы
+                rect.height - 10
+            )
+
             # Центрируем текст внутри кнопки
-            text_rect = text.get_rect(center=rect.center)
-            self.screen.blit(text, text_rect)
+            text_rect = text_surface.get_rect(center=rect.center)
+            self.screen.blit(text_surface, text_rect)
         self.screen.blit(self.logo, self.logo_rect)
         pygame.display.flip()
+

@@ -4,14 +4,8 @@ from cell import Cell
 from timer import Timer
 from scoreboard import Scoreboard
 import random
+from utils import adjust_font_size
 
-
-import pygame
-import sys
-from cell import Cell
-from timer import Timer
-from scoreboard import Scoreboard
-import random
 
 class Game:
     def __init__(self, screen, level_config, level_name):
@@ -37,12 +31,11 @@ class Game:
         self.menu_rect = None
 
     def setup_game_over_buttons(self):
-        button_width = 180  # Увеличиваем ширину кнопок
+        button_width = 180
         button_height = 50
         button_x = self.field_width + 20
         self.play_again_rect = pygame.Rect(button_x, 100, button_width, button_height)
         self.menu_rect = pygame.Rect(button_x, 160, button_width, button_height)
-        self.button_font = pygame.font.Font(None, 28)  # Шрифт для кнопок
 
     def create_cells(self):
         for y in range(self.height):
@@ -184,16 +177,46 @@ class Game:
         text = self.font.render(message, True, (255, 0, 0))
         self.screen.blit(text, (self.field_width + 20, 50))
 
-        # Кнопки уже определены в методе setup_game_over_buttons
-        pygame.draw.rect(self.screen, (0, 255, 0), self.play_again_rect)
-        pygame.draw.rect(self.screen, (0, 0, 255), self.menu_rect)
+        mouse_pos = pygame.mouse.get_pos()
 
-        play_again_text = self.button_font.render('Играть заново', True, (255, 255, 255))
-        menu_text = self.button_font.render('Выход в меню', True, (255, 255, 255))
+        # Обработка кнопки "Играть заново"
+        if self.play_again_rect.collidepoint(mouse_pos):
+            color = (0, 200, 0)  # Более светлый цвет при наведении
+        else:
+            color = (0, 255, 0)
+        pygame.draw.rect(self.screen, color, self.play_again_rect)
+
+        # Обработка кнопки "Выход в меню"
+        if self.menu_rect.collidepoint(mouse_pos):
+            color = (0, 0, 200)  # Более светлый цвет при наведении
+        else:
+            color = (0, 0, 255)
+        pygame.draw.rect(self.screen, color, self.menu_rect)
+
+        # Текст кнопок
+        play_again_text = 'Играть заново'
+        menu_text = 'Выход в меню'
+
+        # Подбираем размер шрифта для текста кнопок
+        font, play_again_surface = adjust_font_size(
+            play_again_text,
+            None,
+            28,
+            self.play_again_rect.width - 10,
+            self.play_again_rect.height - 10
+        )
+        font, menu_surface = adjust_font_size(
+            menu_text,
+            None,
+            28,
+            self.menu_rect.width - 10,
+            self.menu_rect.height - 10
+        )
 
         # Центрируем текст внутри кнопок
-        play_again_text_rect = play_again_text.get_rect(center=self.play_again_rect.center)
-        menu_text_rect = menu_text.get_rect(center=self.menu_rect.center)
+        play_again_text_rect = play_again_surface.get_rect(center=self.play_again_rect.center)
+        menu_text_rect = menu_surface.get_rect(center=self.menu_rect.center)
 
-        self.screen.blit(play_again_text, play_again_text_rect)
-        self.screen.blit(menu_text, menu_text_rect)
+        self.screen.blit(play_again_surface, play_again_text_rect)
+        self.screen.blit(menu_surface, menu_text_rect)
+
