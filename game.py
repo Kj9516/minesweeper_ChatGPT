@@ -24,6 +24,8 @@ class Game:
         self.field_width = self.width * self.cell_size
         self.field_height = self.height * self.cell_size
         self.side_panel_width = 200
+        self.play_again_rect = None
+        self.menu_rect = None
 
     def setup_game_over_buttons(self):
         self.play_again_rect = pygame.Rect(self.field_width + 20, 100, 150, 50)
@@ -48,16 +50,30 @@ class Game:
                 pygame.quit()
                 sys.exit()
             elif not self.game_over and event.type == pygame.MOUSEBUTTONDOWN:
-                # Обработка нажатий во время игры
-                pass
+                x, y = event.pos
+                cell_x = x // self.cell_size
+                cell_y = y // self.cell_size
+                if cell_x < self.width and cell_y < self.height:
+                    cell = self.cells[cell_y][cell_x]
+                    if event.button == 1:
+                        if self.first_click:
+                            self.first_click = False
+                            self.timer.start()
+                            self.place_mines(cell_x, cell_y)
+                            self.calculate_adjacent_mines()
+                        if not cell.flagged:
+                            self.open_cell(cell_x, cell_y)
+                    elif event.button == 3:
+                        if not cell.opened:
+                            cell.flagged = not cell.flagged
             elif self.game_over and event.type == pygame.MOUSEBUTTONDOWN:
-                if self.play_again_rect and self.play_again_rect.collidepoint(event.pos):
+                if hasattr(self, 'play_again_rect') and self.play_again_rect.collidepoint(event.pos):
                     self.__init__(self.screen, {
                         'width': self.width,
                         'height': self.height,
                         'mines': self.mines_count
                     })
-                elif self.menu_rect and self.menu_rect.collidepoint(event.pos):
+                elif hasattr(self, 'menu_rect') and self.menu_rect.collidepoint(event.pos):
                     self.back_to_menu = True
 
     def place_mines(self, exclude_x, exclude_y):
