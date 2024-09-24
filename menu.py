@@ -12,6 +12,7 @@ class Menu:
         self.selected_level = None
         self.show_scores = False  # Новое состояние
         self.font = pygame.font.Font(None, 36)
+        self.button_font = pygame.font.Font(None, 32)  # Новый шрифт для кнопок
         self.levels = list(config['levels'].keys())
         self.logo = pygame.image.load('assets/logo.png')
         max_logo_size = (300, 300)
@@ -23,11 +24,14 @@ class Menu:
 
     def create_buttons(self):
         buttons = []
+        button_width = 250  # Увеличиваем ширину кнопок
+        button_height = 50
+        button_x = 50
         for i, level in enumerate(self.levels):
-            rect = pygame.Rect(50, 100 + i * 70, 200, 50)
+            rect = pygame.Rect(button_x, 100 + i * 70, button_width, button_height)
             buttons.append((rect, level))
         # Добавляем кнопку для просмотра таблицы результатов
-        scores_rect = pygame.Rect(50, 100 + len(self.levels) * 70, 200, 50)
+        scores_rect = pygame.Rect(button_x, 100 + len(self.levels) * 70, button_width, button_height)
         buttons.append((scores_rect, 'scores'))
         return buttons
 
@@ -53,9 +57,11 @@ class Menu:
         for rect, action in self.buttons:
             pygame.draw.rect(self.screen, (100, 100, 100), rect)
             if action in self.levels:
-                text = self.font.render(action.capitalize(), True, (255, 255, 255))
+                text = self.button_font.render(action.capitalize(), True, (255, 255, 255))
             elif action == 'scores':
-                text = self.font.render('Таблица результатов', True, (255, 255, 255))
-            self.screen.blit(text, (rect.x + 10, rect.y + 10))
+                text = self.button_font.render('Таблица результатов', True, (255, 255, 255))
+            # Центрируем текст внутри кнопки
+            text_rect = text.get_rect(center=rect.center)
+            self.screen.blit(text, text_rect)
         self.screen.blit(self.logo, self.logo_rect)
         pygame.display.flip()

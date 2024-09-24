@@ -9,8 +9,9 @@ class ScoresScreen:
         self.screen = screen
         self.active = True
         self.font = pygame.font.Font(None, 24)
+        self.button_font = pygame.font.Font(None, 28)  # Шрифт для кнопки
         self.scoreboard = Scoreboard()
-        self.back_button = pygame.Rect(50, 500, 100, 40)
+        self.back_button = pygame.Rect(50, 500, 120, 40)  # Увеличиваем ширину кнопки
 
     def run(self):
         self.handle_events()
@@ -43,7 +44,9 @@ class ScoresScreen:
             self.screen.blit(text_surface, (50, 60 + idx * 30))
 
         pygame.draw.rect(self.screen, (100, 100, 100), self.back_button)
-        back_text = self.font.render('Назад', True, (255, 255, 255))
-        self.screen.blit(back_text, (self.back_button.x + 10, self.back_button.y + 10))
+        back_text = self.button_font.render('Назад', True, (255, 255, 255))
+        # Центрируем текст внутри кнопки
+        back_text_rect = back_text.get_rect(center=self.back_button.center)
+        self.screen.blit(back_text, back_text_rect)
 
         pygame.display.flip()

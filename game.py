@@ -37,8 +37,12 @@ class Game:
         self.menu_rect = None
 
     def setup_game_over_buttons(self):
-        self.play_again_rect = pygame.Rect(self.field_width + 20, 100, 150, 50)
-        self.menu_rect = pygame.Rect(self.field_width + 20, 160, 150, 50)
+        button_width = 180  # Увеличиваем ширину кнопок
+        button_height = 50
+        button_x = self.field_width + 20
+        self.play_again_rect = pygame.Rect(button_x, 100, button_width, button_height)
+        self.menu_rect = pygame.Rect(button_x, 160, button_width, button_height)
+        self.button_font = pygame.font.Font(None, 28)  # Шрифт для кнопок
 
     def create_cells(self):
         for y in range(self.height):
@@ -180,14 +184,16 @@ class Game:
         text = self.font.render(message, True, (255, 0, 0))
         self.screen.blit(text, (self.field_width + 20, 50))
 
-        self.play_again_rect = pygame.Rect(self.field_width + 20, 100, 150, 50)
-        self.menu_rect = pygame.Rect(self.field_width + 20, 160, 150, 50)
-
+        # Кнопки уже определены в методе setup_game_over_buttons
         pygame.draw.rect(self.screen, (0, 255, 0), self.play_again_rect)
         pygame.draw.rect(self.screen, (0, 0, 255), self.menu_rect)
 
-        play_again_text = self.font.render('Играть заново', True, (255, 255, 255))
-        menu_text = self.font.render('Выход в меню', True, (255, 255, 255))
+        play_again_text = self.button_font.render('Играть заново', True, (255, 255, 255))
+        menu_text = self.button_font.render('Выход в меню', True, (255, 255, 255))
 
-        self.screen.blit(play_again_text, (self.play_again_rect.x + 10, self.play_again_rect.y + 10))
-        self.screen.blit(menu_text, (self.menu_rect.x + 10, self.menu_rect.y + 10))
+        # Центрируем текст внутри кнопок
+        play_again_text_rect = play_again_text.get_rect(center=self.play_again_rect.center)
+        menu_text_rect = menu_text.get_rect(center=self.menu_rect.center)
+
+        self.screen.blit(play_again_text, play_again_text_rect)
+        self.screen.blit(menu_text, menu_text_rect)
