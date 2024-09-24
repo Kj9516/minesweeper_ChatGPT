@@ -9,25 +9,35 @@ from game import Game
 from scores_screen import ScoresScreen
 from language_selector import LanguageSelector
 
-def resource_path(relative_path):
-    """ Получает абсолютный путь к ресурсам, независимо от того, запущен ли файл напрямую или как исполняемый файл. """
-    try:
-        # PyInstaller создает временную папку и сохраняет пути к файлам в `sys._MEIPASS`
-        base_path = sys._MEIPASS
-    except AttributeError:
-        base_path = os.path.abspath(".")
-
-    return os.path.join(base_path, relative_path)
-
 def load_config():
-    config_path = resource_path("config.json")
-    # Загрузка конфигурации из файла
-    with open(config_path, 'r') as f:
+    # Получаем директорию, где находится исполняемый файл или скрипт
+    if getattr(sys, 'frozen', False):
+        # Если приложение скомпилировано PyInstaller
+        application_path = os.path.dirname(sys.executable)
+    else:
+        # Если приложение запущено из исходного кода
+        application_path = os.path.dirname(os.path.abspath(__file__))
+
+    config_path = os.path.join(application_path, 'config.json')
+
+    if not os.path.exists(config_path):
+        raise FileNotFoundError(f"Не найден файл конфигурации: {config_path}")
+
+    with open(config_path, 'r', encoding='utf-8') as f:
         return json.load(f)
 
 def load_localization():
-    localization_path = resource_path("localization.json")
-    # Загрузка конфигурации из файла
+    # Получаем директорию, где находится исполняемый файл или скрипт
+    if getattr(sys, 'frozen', False):
+        application_path = os.path.dirname(sys.executable)
+    else:
+        application_path = os.path.dirname(os.path.abspath(__file__))
+
+    localization_path = os.path.join(application_path, 'localization.json')
+
+    if not os.path.exists(localization_path):
+        raise FileNotFoundError(f"Не найден файл локализации: {localization_path}")
+
     with open(localization_path, 'r', encoding='utf-8') as f:
         return json.load(f)
 
