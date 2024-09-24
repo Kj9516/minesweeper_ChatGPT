@@ -14,7 +14,7 @@ class Cell:
 
     def draw(self, screen):
         if self.opened:
-            color = (200, 200, 200)
+            color = (230, 230, 230)  # Более светлый цвет для открытых ячеек
             if self.has_mine:
                 color = (255, 0, 0)
             pygame.draw.rect(screen, color, self.rect)
@@ -22,7 +22,7 @@ class Cell:
                 text = self.font.render(str(self.adjacent_mines), True, (0, 0, 0))
                 screen.blit(text, (self.rect.x + self.size / 4, self.rect.y + self.size / 4))
         else:
-            pygame.draw.rect(screen, (100, 100, 100), self.rect)
+            pygame.draw.rect(screen, (200, 200, 200), self.rect)  # Более светлый цвет для закрытых ячеек
             if self.flagged:
-                pygame.draw.circle(screen, (255, 255, 0), self.rect.center, self.size / 4)
+                pygame.draw.circle(screen, (255, 0, 0), self.rect.center, self.size / 4)
         pygame.draw.rect(screen, (0, 0, 0), self.rect, 1)

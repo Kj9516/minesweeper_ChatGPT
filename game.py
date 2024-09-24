@@ -21,6 +21,13 @@ class Game:
         self.timer = Timer()
         self.scoreboard = Scoreboard()
         self.create_cells()
+        self.field_width = self.width * self.cell_size
+        self.field_height = self.height * self.cell_size
+        self.side_panel_width = 200
+
+    def setup_game_over_buttons(self):
+        self.play_again_rect = pygame.Rect(self.field_width + 20, 100, 150, 50)
+        self.menu_rect = pygame.Rect(self.field_width + 20, 160, 150, 50)
 
     def create_cells(self):
         for y in range(self.height):
@@ -41,35 +48,28 @@ class Game:
                 pygame.quit()
                 sys.exit()
             elif not self.game_over and event.type == pygame.MOUSEBUTTONDOWN:
-                x, y = event.pos
-                cell_x = x // self.cell_size
-                cell_y = y // self.cell_size
-                if cell_x < self.width and cell_y < self.height:
-                    cell = self.cells[cell_y][cell_x]
-                    if event.button == 1:
-                        if self.first_click:
-                            self.first_click = False
-                            self.timer.start()
-                            self.place_mines(cell_x, cell_y)
-                            self.calculate_adjacent_mines()
-                        if not cell.flagged:
-                            self.open_cell(cell_x, cell_y)
-                    elif event.button == 3:
-                        if not cell.opened:
-                            cell.flagged = not cell.flagged
+                # Обработка нажатий во время игры
+                pass
             elif self.game_over and event.type == pygame.MOUSEBUTTONDOWN:
-                if self.play_again_rect.collidepoint(event.pos):
+                if self.play_again_rect and self.play_again_rect.collidepoint(event.pos):
                     self.__init__(self.screen, {
                         'width': self.width,
                         'height': self.height,
                         'mines': self.mines_count
                     })
-                elif self.menu_rect.collidepoint(event.pos):
+                elif self.menu_rect and self.menu_rect.collidepoint(event.pos):
                     self.back_to_menu = True
 
     def place_mines(self, exclude_x, exclude_y):
         positions = [(x, y) for x in range(self.width) for y in range(self.height)]
-        positions.remove((exclude_x, exclude_y))
+        # Исключаем нажатую ячейку и её соседей
+        excluded_positions = []
+        for dx in [-1, 0, 1]:
+            for dy in [-1, 0, 1]:
+                nx, ny = exclude_x + dx, exclude_y + dy
+                if 0 <= nx < self.width and 0 <= ny < self.height:
+                    excluded_positions.append((nx, ny))
+        positions = [pos for pos in positions if pos not in excluded_positions]
         mines = random.sample(positions, self.mines_count)
         for x, y in mines:
             self.cells[y][x].has_mine = True
@@ -114,6 +114,9 @@ class Game:
             for cell in row:
                 if cell.has_mine:
                     cell.opened = True
+        self.game_over = True
+        self.timer.stop()
+        self.setup_game_over_buttons()
 
     def check_victory(self):
         opened_cells = sum(cell.opened for row in self.cells for cell in row)
@@ -122,6 +125,7 @@ class Game:
             self.game_over = True
             self.timer.stop()
             self.scoreboard.save_score(self.timer.elapsed_time)
+            self.setup_game_over_buttons()
 
     def update(self):
         if not self.game_over and not self.first_click:
@@ -129,10 +133,12 @@ class Game:
 
     def draw(self):
         self.screen.fill((255, 255, 255))
+        # Рисуем игровое поле
         for row in self.cells:
             for cell in row:
                 cell.draw(self.screen)
-        self.timer.draw(self.screen)
+        # Рисуем таймер в боковой панели
+        self.timer.draw(self.screen, self.field_width + 20, 10)
         if self.game_over:
             self.draw_game_over()
         pygame.display.flip()
@@ -140,10 +146,10 @@ class Game:
     def draw_game_over(self):
         message = 'Победа!' if self.victory else 'Поражение!'
         text = self.font.render(message, True, (255, 0, 0))
-        self.screen.blit(text, (self.width * self.cell_size + 20, 50))
+        self.screen.blit(text, (self.field_width + 20, 50))
 
-        self.play_again_rect = pygame.Rect(self.width * self.cell_size + 20, 100, 150, 50)
-        self.menu_rect = pygame.Rect(self.width * self.cell_size + 20, 160, 150, 50)
+        self.play_again_rect = pygame.Rect(self.field_width + 20, 100, 150, 50)
+        self.menu_rect = pygame.Rect(self.field_width + 20, 160, 150, 50)
 
         pygame.draw.rect(self.screen, (0, 255, 0), self.play_again_rect)
         pygame.draw.rect(self.screen, (0, 0, 255), self.menu_rect)

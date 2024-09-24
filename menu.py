@@ -11,6 +11,11 @@ class Menu:
         self.font = pygame.font.Font(None, 36)
         self.levels = list(config['levels'].keys())
         self.logo = pygame.image.load('assets/logo.png')
+        # Масштабируем логотип, если он слишком большой
+        max_logo_size = (300, 300)
+        self.logo = pygame.transform.scale(self.logo, max_logo_size)
+        self.logo_rect = self.logo.get_rect()
+        self.logo_rect.topright = (self.screen.get_width() - 50, 50)
         self.buttons = self.create_buttons()
 
     def create_buttons(self):
@@ -40,5 +45,5 @@ class Menu:
             pygame.draw.rect(self.screen, (100, 100, 100), rect)
             text = self.font.render(level.capitalize(), True, (255, 255, 255))
             self.screen.blit(text, (rect.x + 50, rect.y + 10))
-        self.screen.blit(self.logo, (400, 100))
+        self.screen.blit(self.logo, self.logo_rect)
         pygame.display.flip()
