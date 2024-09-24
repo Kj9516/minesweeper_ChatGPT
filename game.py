@@ -8,12 +8,14 @@ from utils import adjust_font_size
 
 
 class Game:
-    def __init__(self, screen, level_config, level_name):
+    def __init__(self, screen, level_config, level_name, localization, language):
         self.screen = screen
         self.width = level_config['width']
         self.height = level_config['height']
         self.mines_count = level_config['mines']
-        self.level_name = level_name  # Новый параметр
+        self.level_name = level_name
+        self.localization = localization
+        self.language = language
         self.cell_size = 30
         self.cells = []
         self.first_click = True
@@ -21,7 +23,7 @@ class Game:
         self.victory = False
         self.back_to_menu = False
         self.font = pygame.font.Font(None, 36)
-        self.timer = Timer()
+        self.timer = Timer(self.localization, self.language)
         self.scoreboard = Scoreboard()
         self.create_cells()
         self.field_width = self.width * self.cell_size
@@ -173,7 +175,8 @@ class Game:
         pygame.display.flip()
 
     def draw_game_over(self):
-        message = 'Победа!' if self.victory else 'Поражение!'
+        message_key = 'victory' if self.victory else 'defeat'
+        message = self.localization[self.language][message_key]
         text = self.font.render(message, True, (255, 0, 0))
         self.screen.blit(text, (self.field_width + 20, 50))
 
@@ -181,21 +184,21 @@ class Game:
 
         # Обработка кнопки "Играть заново"
         if self.play_again_rect.collidepoint(mouse_pos):
-            color = (0, 200, 0)  # Более светлый цвет при наведении
+            color = (0, 200, 0)
         else:
             color = (0, 255, 0)
         pygame.draw.rect(self.screen, color, self.play_again_rect)
 
         # Обработка кнопки "Выход в меню"
         if self.menu_rect.collidepoint(mouse_pos):
-            color = (0, 0, 200)  # Более светлый цвет при наведении
+            color = (0, 0, 200)
         else:
             color = (0, 0, 255)
         pygame.draw.rect(self.screen, color, self.menu_rect)
 
         # Текст кнопок
-        play_again_text = 'Играть заново'
-        menu_text = 'Выход в меню'
+        play_again_text = self.localization[self.language]['play_again']
+        menu_text = self.localization[self.language]['exit_to_menu']
 
         # Подбираем размер шрифта для текста кнопок
         font, play_again_surface = adjust_font_size(

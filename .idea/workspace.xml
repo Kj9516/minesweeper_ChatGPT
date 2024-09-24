@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="be9a69ab-aa5c-4167-b6a2-231d0bd2d355" name="Changes" comment="Game written, using only chatGPT-o1 preview. You can see all conversation on Russian on ReadME file">
-      <change beforePath="$PROJECT_DIR$/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/game.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/menu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scores_screen.py" beforeDir="false" afterPath="$PROJECT_DIR$/scores_screen.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
-    </list>
+    <list default="true" id="be9a69ab-aa5c-4167-b6a2-231d0bd2d355" name="Changes" comment="Game written, using only chatGPT-o1 preview. You can see all conversation on Russian on ReadME file" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -56,7 +51,7 @@
     "Python.main.executor": "Run",
     "Python.main.py.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "fiatures",
+    "git-widget-placeholder": "localization",
     "settings.editor.selected.configurable": "configurable.group.project"
   }
 }]]></component>
@@ -181,7 +176,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="localization" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -190,6 +197,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Init.&#10;Game written, using only chatGPT-o1 preview. You can see all conversation on Russian on ReadME file" />
     <MESSAGE value="Game written, using only chatGPT-o1 preview. You can see all conversation on Russian on ReadME file" />
-    <option name="LAST_COMMIT_MESSAGE" value="Game written, using only chatGPT-o1 preview. You can see all conversation on Russian on ReadME file" />
+    <MESSAGE value="Added decoration effects" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added decoration effects" />
   </component>
 </project>

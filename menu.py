@@ -5,16 +5,16 @@ import sys
 from scoreboard import Scoreboard
 from utils import adjust_font_size
 
-
 class Menu:
-    def __init__(self, screen, config):
+    def __init__(self, screen, config, localization, language):
         self.screen = screen
         self.config = config
+        self.localization = localization
+        self.language = language
         self.active = True
         self.selected_level = None
-        self.show_scores = False  # Новое состояние
+        self.show_scores = False
         self.font = pygame.font.Font(None, 36)
-        self.button_font = pygame.font.Font(None, 32)  # Новый шрифт для кнопок
         self.levels = list(config['levels'].keys())
         self.logo = pygame.image.load('assets/logo.png')
         max_logo_size = (300, 300)
@@ -26,7 +26,7 @@ class Menu:
 
     def create_buttons(self):
         buttons = []
-        button_width = 250  # Увеличиваем ширину кнопок
+        button_width = 250
         button_height = 50
         button_x = 50
         for i, level in enumerate(self.levels):
@@ -56,30 +56,30 @@ class Menu:
                         if action in self.levels:
                             self.selected_level = action
                         elif action == 'scores':
-                            self.show_scores = True  # Переходим к экрану результатов
+                            self.show_scores = True
 
     def draw(self):
         self.screen.fill((200, 200, 200))
         mouse_pos = pygame.mouse.get_pos()
         for rect, action in self.buttons:
-            # Проверяем, находится ли курсор мыши над кнопкой
             if rect.collidepoint(mouse_pos):
-                color = (150, 150, 150)  # Более светлый цвет при наведении
+                color = (150, 150, 150)
             else:
                 color = (100, 100, 100)
             pygame.draw.rect(self.screen, color, rect)
 
             if action in self.levels:
-                text = action.capitalize()
+                # Получаем локализованное название уровня
+                level_text = self.localization[self.language][action]
             elif action == 'scores':
-                text = 'Таблица результатов'
+                level_text = self.localization[self.language]['scores_table']
 
             # Используем функцию для подбора размера шрифта
             font, text_surface = adjust_font_size(
-                text,
+                level_text,
                 None,
                 36,
-                rect.width - 10,  # Учитываем отступы
+                rect.width - 10,
                 rect.height - 10
             )
 
@@ -88,4 +88,3 @@ class Menu:
             self.screen.blit(text_surface, text_rect)
         self.screen.blit(self.logo, self.logo_rect)
         pygame.display.flip()
-

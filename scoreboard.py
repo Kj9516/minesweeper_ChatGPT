@@ -9,14 +9,14 @@ class Scoreboard:
 
     def save_score(self, level, width, height, mines, time_spent):
         now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        with open(self.filename, 'a', newline='') as csvfile:
+        with open(self.filename, 'a', newline='', encoding='utf-8') as csvfile:
             writer = csv.writer(csvfile)
             writer.writerow([now, level, width, height, mines, time_spent])
 
     def load_scores(self):
         scores = []
         try:
-            with open(self.filename, 'r') as csvfile:
+            with open(self.filename, 'r', encoding='utf-8') as csvfile:
                 reader = csv.reader(csvfile)
                 for row in reader:
                     score = {
@@ -28,8 +28,7 @@ class Scoreboard:
                         'time': float(row[5])
                     }
                     scores.append(score)
-            # Сортируем результаты по времени прохождения
-            scores.sort(key=lambda x: x['time'])
-            return scores
+                scores.sort(key=lambda x: x['time'])
+                return scores
         except FileNotFoundError:
             return []

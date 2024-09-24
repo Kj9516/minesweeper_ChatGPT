@@ -1,12 +1,16 @@
+# timer.py
+
 import pygame
 import time
 
 class Timer:
-    def __init__(self):
+    def __init__(self, localization, language):
         self.start_time = None
         self.elapsed_time = 0
         self.running = False
         self.font = pygame.font.Font(None, 36)
+        self.localization = localization
+        self.language = language
 
     def start(self):
         self.start_time = time.time()
@@ -22,5 +26,6 @@ class Timer:
             self.elapsed_time = int(time.time() - self.start_time)
 
     def draw(self, screen, x, y):
-        timer_text = self.font.render(f'Время: {self.elapsed_time}s', True, (0, 0, 0))
+        time_text = self.localization[self.language]['time'].format(time=self.elapsed_time)
+        timer_text = self.font.render(time_text, True, (0, 0, 0))
         screen.blit(timer_text, (x, y))
