@@ -1,4 +1,5 @@
 # main.py
+import os
 
 import pygame
 import sys
@@ -9,11 +10,35 @@ from scores_screen import ScoresScreen
 from language_selector import LanguageSelector
 
 def load_config():
-    with open('config.json', 'r') as f:
+    # Получаем директорию, где находится исполняемый файл или скрипт
+    if getattr(sys, 'frozen', False):
+        # Если приложение скомпилировано PyInstaller
+        application_path = os.path.dirname(sys.executable)
+    else:
+        # Если приложение запущено из исходного кода
+        application_path = os.path.dirname(os.path.abspath(__file__))
+
+    config_path = os.path.join(application_path, 'config.json')
+
+    if not os.path.exists(config_path):
+        raise FileNotFoundError(f"Не найден файл конфигурации: {config_path}")
+
+    with open(config_path, 'r', encoding='utf-8') as f:
         return json.load(f)
 
 def load_localization():
-    with open('localization.json', 'r', encoding='utf-8') as f:
+    # Получаем директорию, где находится исполняемый файл или скрипт
+    if getattr(sys, 'frozen', False):
+        application_path = os.path.dirname(sys.executable)
+    else:
+        application_path = os.path.dirname(os.path.abspath(__file__))
+
+    localization_path = os.path.join(application_path, 'localization.json')
+
+    if not os.path.exists(localization_path):
+        raise FileNotFoundError(f"Не найден файл локализации: {localization_path}")
+
+    with open(localization_path, 'r', encoding='utf-8') as f:
         return json.load(f)
 
 def main():
