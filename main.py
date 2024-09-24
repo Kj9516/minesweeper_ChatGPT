@@ -76,7 +76,7 @@ def main():
         elif scores_screen and not scores_screen.active:
             # Возвращаемся в меню
             menu.active = True
-            menu.show_scores = False
+            menu.show_scores = False  # Сбрасываем состояние показа таблицы результатов
             scores_screen = None
             screen = pygame.display.set_mode((800, 600))  # Размер для меню
         elif game:

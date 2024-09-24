@@ -31,6 +31,7 @@ class Game:
         self.side_panel_width = 200
         self.play_again_rect = None
         self.menu_rect = None
+        self.exit_button_rect = None  # Добавляем атрибут для кнопки выхода
 
     def setup_game_over_buttons(self):
         button_width = 180
@@ -58,26 +59,29 @@ class Game:
                 pygame.quit()
                 sys.exit()
             elif not self.game_over and event.type == pygame.MOUSEBUTTONDOWN:
-                x, y = event.pos
-                cell_x = x // self.cell_size
-                cell_y = y // self.cell_size
-                if cell_x < self.width and cell_y < self.height:
-                    cell = self.cells[cell_y][cell_x]
-                    if event.button == 1:
-                        if self.first_click:
-                            self.first_click = False
-                            self.timer.start()
-                            self.place_mines(cell_x, cell_y)
-                            self.calculate_adjacent_mines()
-                            # Открываем первую ячейку после установки мин
-                            if not cell.flagged:
-                                self.open_cell(cell_x, cell_y)
-                        else:
-                            if not cell.flagged:
-                                self.open_cell(cell_x, cell_y)
-                    elif event.button == 3:
-                        if not cell.opened:
-                            cell.flagged = not cell.flagged
+                if self.exit_button_rect and self.exit_button_rect.collidepoint(event.pos):
+                    self.back_to_menu = True  # Возвращаемся в главное меню
+                else:
+                    x, y = event.pos
+                    cell_x = x // self.cell_size
+                    cell_y = y // self.cell_size
+                    if cell_x < self.width and cell_y < self.height:
+                        cell = self.cells[cell_y][cell_x]
+                        if event.button == 1:
+                            if self.first_click:
+                                self.first_click = False
+                                self.timer.start()
+                                self.place_mines(cell_x, cell_y)
+                                self.calculate_adjacent_mines()
+                                # Открываем первую ячейку после установки мин
+                                if not cell.flagged:
+                                    self.open_cell(cell_x, cell_y)
+                            else:
+                                if not cell.flagged:
+                                    self.open_cell(cell_x, cell_y)
+                        elif event.button == 3:
+                            if not cell.opened:
+                                cell.flagged = not cell.flagged
             elif self.game_over and event.type == pygame.MOUSEBUTTONDOWN:
                 if self.play_again_rect and self.play_again_rect.collidepoint(event.pos):
                     self.__init__(self.screen, {
@@ -172,11 +176,39 @@ class Game:
         for row in self.cells:
             for cell in row:
                 cell.draw(self.screen)
-        # Рисуем таймер в боковой панели
-        self.timer.draw(self.screen, self.field_width + 20, 10)
+        # Рисуем боковую панель
+        self.draw_side_panel()
         if self.game_over:
             self.draw_game_over()
         pygame.display.flip()
+
+    def draw_side_panel(self):
+        # Рисуем таймер
+        self.timer.draw(self.screen, self.field_width + 20, 10)
+
+        # Рисуем кнопку "Завершить игру"
+        button_width = 150
+        button_height = 50
+        button_x = self.field_width + 20
+        button_y = self.screen.get_height() - button_height - 20  # Отступ в 20 пикселей от нижнего края
+        self.exit_button_rect = pygame.Rect(button_x, button_y, button_width, button_height)
+        mouse_pos = pygame.mouse.get_pos()
+        if self.exit_button_rect.collidepoint(mouse_pos):
+            color = (169, 169, 169)  # Светло-серый при наведении
+        else:
+            color = (128, 128, 128)  # Стандартный серый цвет
+        pygame.draw.rect(self.screen, color, self.exit_button_rect)
+
+        exit_text = self.localization[self.language]['end_game']
+        font, exit_surface = adjust_font_size(
+            exit_text,
+            None,
+            28,
+            self.exit_button_rect.width - 10,
+            self.exit_button_rect.height - 10
+        )
+        exit_text_rect = exit_surface.get_rect(center=self.exit_button_rect.center)
+        self.screen.blit(exit_surface, exit_text_rect)
 
     def draw_game_over(self):
         message_key = 'victory' if self.victory else 'defeat'

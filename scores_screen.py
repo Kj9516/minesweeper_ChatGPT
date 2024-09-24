@@ -48,9 +48,9 @@ class ScoresScreen:
 
         mouse_pos = pygame.mouse.get_pos()
         if self.back_button.collidepoint(mouse_pos):
-            color = (150, 150, 150)
+            color = (169, 169, 169)  # Светло-серый при наведении
         else:
-            color = (100, 100, 100)
+            color = (128, 128, 128)  # Стандартный серый цвет
         pygame.draw.rect(self.screen, color, self.back_button)
 
         back_text = self.localization[self.language]['back']
