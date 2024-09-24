@@ -35,6 +35,9 @@ class Menu:
         # Добавляем кнопку для просмотра таблицы результатов
         scores_rect = pygame.Rect(button_x, 100 + len(self.levels) * 70, button_width, button_height)
         buttons.append((scores_rect, 'scores'))
+        # Добавляем кнопку выхода из игры
+        exit_rect = pygame.Rect(button_x, 100 + (len(self.levels) + 1) * 70, button_width, button_height)
+        buttons.append((exit_rect, 'exit'))
         return buttons
 
     def run(self):
@@ -57,6 +60,9 @@ class Menu:
                             self.selected_level = action
                         elif action == 'scores':
                             self.show_scores = True
+                        elif action == 'exit':
+                            pygame.quit()
+                            sys.exit()
 
     def draw(self):
         self.screen.fill((200, 200, 200))
@@ -73,6 +79,8 @@ class Menu:
                 level_text = self.localization[self.language][action]
             elif action == 'scores':
                 level_text = self.localization[self.language]['scores_table']
+            elif action == 'exit':
+                level_text = self.localization[self.language]['exit_game']
 
             # Используем функцию для подбора размера шрифта
             font, text_surface = adjust_font_size(
