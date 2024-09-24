@@ -28,7 +28,7 @@ def load_config():
 def load_localization():
     localization_path = resource_path("localization.json")
     # Загрузка конфигурации из файла
-    with open(localization_path, 'r') as f:
+    with open(localization_path, 'r', encoding='utf-8') as f:
         return json.load(f)
 
 def main():
