@@ -5,12 +5,21 @@ from timer import Timer
 from scoreboard import Scoreboard
 import random
 
+
+import pygame
+import sys
+from cell import Cell
+from timer import Timer
+from scoreboard import Scoreboard
+import random
+
 class Game:
-    def __init__(self, screen, level_config):
+    def __init__(self, screen, level_config, level_name):
         self.screen = screen
         self.width = level_config['width']
         self.height = level_config['height']
         self.mines_count = level_config['mines']
+        self.level_name = level_name  # Новый параметр
         self.cell_size = 30
         self.cells = []
         self.first_click = True
