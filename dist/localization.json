@@ -1,0 +1,43 @@
+{
+    "languages": ["en", "ru"],
+    "en": {
+        "play_again": "Play Again",
+        "exit_to_menu": "Exit to Menu",
+        "best_scores": "Best Scores",
+        "back": "Back",
+        "victory": "Victory!",
+        "defeat": "Defeat!",
+        "time": "Time: {time}s",
+        "level": "Level",
+        "field": "Field",
+        "mines": "Mines",
+        "small": "Small",
+        "medium": "Medium",
+        "large": "Large",
+        "scores_table": "Scores Table",
+        "select_language": "Select Language",
+        "start_game": "Start Game",
+        "exit_game": "Exit Game",
+        "end_game": "End Game"
+    },
+    "ru": {
+        "play_again": "Играть заново",
+        "exit_to_menu": "Выход в меню",
+        "best_scores": "Лучшие результаты",
+        "back": "Назад",
+        "victory": "Победа!",
+        "defeat": "Поражение!",
+        "time": "Время: {time}с",
+        "level": "Уровень",
+        "field": "Поле",
+        "mines": "Мины",
+        "small": "Маленький",
+        "medium": "Средний",
+        "large": "Большой",
+        "scores_table": "Таблица результатов",
+        "select_language": "Выбор языка",
+        "start_game": "Начать игру",
+        "exit_game": "Выход",
+        "end_game": "Завершить игру"
+    }
+}
