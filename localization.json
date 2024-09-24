@@ -17,7 +17,8 @@
         "scores_table": "Scores Table",
         "select_language": "Select Language",
         "start_game": "Start Game",
-        "exit_game": "Exit Game"
+        "exit_game": "Exit Game",
+        "end_game": "End Game"
     },
     "ru": {
         "play_again": "Играть заново",
@@ -36,6 +37,7 @@
         "scores_table": "Таблица результатов",
         "select_language": "Выбор языка",
         "start_game": "Начать игру",
-        "exit_game": "Выход"
+        "exit_game": "Выход",
+        "end_game": "Завершить игру"
     }
 }
