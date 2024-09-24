@@ -23,4 +23,4 @@ class Timer:
 
     def draw(self, screen):
         timer_text = self.font.render(f'Время: {self.elapsed_time}s', True, (0, 0, 0))
-        screen.blit(timer_text, (self.start_time, 10))
+        screen.blit(timer_text, (10, 10))
